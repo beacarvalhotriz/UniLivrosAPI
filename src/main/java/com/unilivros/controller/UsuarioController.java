@@ -114,3 +114,21 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 }
+
+
+@GetMapping("/{id}/recomendacoes")
+public ResponseEntity<List<LivroDTO>> recomendarLivros(@PathVariable Long id,
+                                                       @RequestParam(defaultValue = "10") int limite) {
+    List<LivroDTO> recomendados = recomendacaoService.recomendarParaUsuario(id, limite);
+    return ResponseEntity.ok(recomendados);
+}
+
+private final RecomendacaoService recomendacaoService;
+
+public UsuarioController(UsuarioService usuarioService,
+                         RecomendacaoService recomendacaoService,
+                         ModelMapper modelMapper) {
+    this.usuarioService = usuarioService;
+    this.recomendacaoService = recomendacaoService;
+    this.modelMapper = modelMapper;
+}

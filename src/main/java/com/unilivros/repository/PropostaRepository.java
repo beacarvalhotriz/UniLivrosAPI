@@ -12,6 +12,12 @@ import java.util.List;
 @Repository
 public interface PropostaRepository extends JpaRepository<Proposta, Long> {
     
+     @Query("select p from Proposta p " +
+           "where p.proponente.id = :usuarioId " +
+           "or p.proposto.id = :usuarioId")
+    List<Proposta> findByUsuarioEnvolvido(@Param("usuarioId") Long usuarioId);
+}
+
     List<Proposta> findByProponente(Usuario proponente);
     
     List<Proposta> findByProposto(Usuario proposto);
@@ -19,6 +25,8 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
     List<Proposta> findByProponenteAndStatus(Usuario proponente, Proposta.StatusProposta status);
     
     List<Proposta> findByPropostoAndStatus(Usuario proposto, Proposta.StatusProposta status);
+
+    List<Proposta> findByProponenteIdOrPropostoId(Long proponenteId, Long propostoId);
     
     @Query("SELECT p FROM Proposta p WHERE (p.proponente = :usuario OR p.proposto = :usuario) AND p.status = :status")
     List<Proposta> findByUsuarioAndStatus(@Param("usuario") Usuario usuario, @Param("status") Proposta.StatusProposta status);

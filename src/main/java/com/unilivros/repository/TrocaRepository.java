@@ -14,9 +14,15 @@ import java.util.List;
 public interface TrocaRepository extends JpaRepository<Troca, Long> {
     
     List<Troca> findByStatus(Troca.StatusTroca status);
+
+    List<Troca> findByUsuariosUsuarioId(Long usuarioId);
+
     
     boolean existsByAgendamento(Agendamento agendamento);
     
+    @OneToMany(mappedBy = "troca")
+    private List<TrocaUsuario> usuarios;
+
     @Query("SELECT t FROM Troca t JOIN t.usuarios tu WHERE tu.usuario.id = :usuarioId")
     List<Troca> findByUsuario(@Param("usuarioId") Long usuarioId);
     

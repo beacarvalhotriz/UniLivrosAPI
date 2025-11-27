@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+    public interface UsuarioLivroRepository extends JpaRepository<UsuarioLivro, Long> {
+
+    
+    List<UsuarioLivro> findByUsuarioId(Long usuarioId);
+}
 @Repository
 public interface UsuarioLivroRepository extends JpaRepository<UsuarioLivro, Long> {
     

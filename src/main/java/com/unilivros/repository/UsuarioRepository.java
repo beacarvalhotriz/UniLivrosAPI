@@ -19,7 +19,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(String email);
     
     boolean existsByMatricula(String matricula);
-    
+
+    List<UsuarioLivro> findByUsuarioId(Long usuarioId);
+
+
     @Query("SELECT u FROM Usuario u WHERE u.curso = :curso")
     List<Usuario> findByCurso(@Param("curso") String curso);
     
